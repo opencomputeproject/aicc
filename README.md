@@ -30,7 +30,7 @@ apps-script/Code.gs                       Backend
 1. Open the **Survey Results** Sheet (AICC Drive folder) → **Extensions → Apps Script**. Name the project, e.g. "AICC NeoCloud survey".
 2. Replace the contents of `Code.gs` with `apps-script/Code.gs`.
 3. Click **+** next to Files → **Script**, name it `Survey`, and paste `forms/neocloud-requirements/survey.js` into it. Save.
-4. Pick `setup` in the toolbar and click **Run**. Allow the permissions (if Google says the app isn't verified: **Advanced → Go to … (unsafe)**; it's your own script). The Sheet gets a **Responses** tab (154 columns) and a **Codebook** tab.
+4. Pick `setup` in the toolbar and click **Run**. The script is limited to this one Sheet (`@OnlyCurrentDoc`) and asks only to edit this spreadsheet and send email as you, which accounts in Google's Advanced Protection Program can allow. If Google still blocks it (`Error 400: policy_enforced`), a Workspace admin can mark the script's OAuth client ID as **Trusted** (Admin console → Security → API controls → Manage Third-Party App Access), or deploy from a shared account that isn't in Advanced Protection. Allow the permissions (if Google says the app isn't verified: **Advanced → Go to … (unsafe)**; it's your own script). The Sheet gets a **Responses** tab (154 columns) and a **Codebook** tab.
 5. **Deploy → New deployment → Web app**. Execute as: *Me*. Who has access: *Anyone*. Copy the `/exec` URL.
 6. Paste it into `forms/neocloud-requirements/config.js` as `endpoint`, commit, and bump the `?v=` stamps in `forms/neocloud-requirements/index.html`.
 

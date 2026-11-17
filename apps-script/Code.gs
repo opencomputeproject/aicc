@@ -1,3 +1,7 @@
+/** @OnlyCurrentDoc */
+// ^ Limits this script to the one Sheet it is attached to, so Google asks only for "this spreadsheet" and
+//   "send email as you". Keep it: accounts in Google's Advanced Protection Program block broader requests.
+
 /**
  * OCP AICC · NeoCloud Deployment Requirements Survey – response receiver (Google Apps Script web app)
  *
@@ -13,7 +17,8 @@
 
 // ---- 1. Settings ------------------------------------------------------------------------
 const CONFIG = {
-  sheetId: '1D51otB94V_2Vx5AuIHR-jgwDH20cFB3OggVk5jGuj2s',   // "Survey Results" in the AICC Drive folder
+  // Rows go to the Sheet this script is attached to ("Survey Results" in the AICC Drive folder,
+  // 1D51otB94V_2Vx5AuIHR-jgwDH20cFB3OggVk5jGuj2s). Create the script from that Sheet: Extensions → Apps Script.
   tab: 'Responses',              // rows go here; don't rename it once responses arrive
   codebookTab: 'Codebook',       // written by setup: every code and its wording
   refPrefix: 'NC',               // references look like NC-3F9A1C
@@ -30,6 +35,7 @@ const CONFIG = {
   staffColumns: ['Status', 'Notes'],
   statusOptions: ['New', 'Reviewed', 'Follow up', 'Exclude from analysis'],
 };
+// Logos in the confirmation email are linked from the survey site (no web-fetch permission needed).
 const LOGOS = { ocpLogo: CONFIG.site + 'assets/ocp-logo.png', aiccLogo: CONFIG.site + 'assets/aicc-icon.png' };
 
 // Values written for answers that were not asked or left empty (explained in the Codebook tab).
@@ -134,7 +140,6 @@ function writeCodebook() {
 /** Run once after pasting a new version, so Google asks for any new permission before a live response needs it. */
 function authorize() {
   book_(); editSecret_();
-  try { UrlFetchApp.fetch(LOGOS.ocpLogo); } catch (e) { Logger.log('Logos not reachable yet (GitHub Pages off?): ' + e); }
   Logger.log('Permissions OK. Emails left today: ' + MailApp.getRemainingDailyQuota());
 }
 
@@ -410,9 +415,7 @@ function sendReceipt_(c, a, ref, updated) {
   const link = editLink_(ref);
   const until = CONFIG.closesLabel ? ` until ${CONFIG.closesLabel}` : ' while the survey is open';
   const when = Utilities.formatDate(new Date(), 'America/Los_Angeles', 'MMMM d, yyyy');
-  const images = {};
-  for (const cid in LOGOS) { try { images[cid] = UrlFetchApp.fetch(LOGOS[cid]).getBlob().setName(cid + '.png'); } catch (e) { /* send without that logo */ } }
-  const logo = (cid, w, h, alt) => images[cid] ? `<img src="cid:${cid}" width="${w}" height="${h}" alt="${alt}" style="display:block;border:0;">` : `<span style="font:bold 14px Arial,sans-serif;color:#5F6062;">${alt}</span>`;
+  const logo = (cid, w, h, alt) => `<img src="${LOGOS[cid]}" width="${w}" height="${h}" alt="${alt}" style="display:block;border:0;">`;
   const label = 'font:bold 11px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#343895;';
   const rows = [['Reference', ref]].concat(summary_(c, a), [[updated ? 'Updated' : 'Submitted', when]]);
   const row = (r, i) => `<tr><td style="padding:6px 16px${i === rows.length - 1 ? ' 14px' : ''};color:#5F6062;width:140px;">${esc_(r[0])}</td><td style="padding:6px 16px${i === rows.length - 1 ? ' 14px' : ''};color:#19194D;${i === 0 ? 'font-weight:bold;' : ''}">${esc_(r[1])}</td></tr>`;
@@ -442,7 +445,7 @@ function sendReceipt_(c, a, ref, updated) {
   const text = `Hi ${c.firstName},\n\n${lead}\n\nYOUR RESPONSE\n` + rows.map(r => `${r[0]}: ${r[1]}`).join('\n') +
     `\n\nNeed to change an answer? Reopen your response${until}:\n${link}\n(This link is private to your response. Please don't forward it.)\n\n` +
     `OCP AI Computing Continuum project: ${CONFIG.projectUrl}\nMailing list: ${CONFIG.mailingList}`;
-  const mail = { to: c.email, subject: `${SURVEY.title} – response ${updated ? 'updated' : 'received'} (${ref})`, body: text, htmlBody: html, inlineImages: images, name: CONFIG.senderName };
+  const mail = { to: c.email, subject: `${SURVEY.title} – response ${updated ? 'updated' : 'received'} (${ref})`, body: text, htmlBody: html, name: CONFIG.senderName };
   if (CONFIG.replyTo) mail.replyTo = CONFIG.replyTo;
   MailApp.sendEmail(mail);
 }
@@ -458,7 +461,7 @@ function notifyStaff_(c, a, ref) {
 }
 
 // ---- Sheet helpers ------------------------------------------------------------------------
-function book_() { return CONFIG.sheetId ? SpreadsheetApp.openById(CONFIG.sheetId) : SpreadsheetApp.getActiveSpreadsheet(); }
+function book_() { return SpreadsheetApp.getActiveSpreadsheet(); }   // the Sheet this script is attached to
 // '' when the form columns (A through "Last edited") match the survey; otherwise what differs.
 function columnProblem_(sh) {
   const want = headers_().slice(0, formColumnCount_());
