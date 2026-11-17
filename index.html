@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OCP AI Computing Continuum · Surveys</title>
+<link rel="icon" href="assets/aicc-icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/form.css?v=202611171200">
+</head>
+<body>
+<div class="logobar"><div class="wrap">
+  <a class="logo" href="https://www.opencompute.org"><img src="assets/ocp-logo.png" alt="Open Compute Project" width="100" height="40"></a>
+  <a class="projmark" href="https://www.opencompute.org/projects/aicc/"><img src="assets/aicc-icon.svg" alt="" width="52" height="52"><span><b>AI Computing Continuum</b><small>OCP Project · AICC</small></span></a>
+</div></div>
+<header class="band"><div class="wrap">
+  <div class="eyebrow">OCP AI Computing Continuum · AICC</div>
+  <h1>Surveys</h1>
+  <p class="lede">Open, modular AI infrastructure for sites beyond the hyperscale data center. Help the project by sharing your deployment requirements.</p>
+</div></header>
+<main class="wrap" style="padding-block:40px 80px">
+  <!-- data-closes = the survey's deadline in UTC (same as its config.js); leave empty while it has none -->
+  <section class="step" data-closes="">
+    <div class="stephead"><span class="stepno">OPEN</span><h2>NeoCloud Deployment Requirements Survey</h2></div>
+    <p class="stepnote">50 multiple-choice questions · about 20–25 minutes · for NeoCloud and AI infrastructure providers<span class="when"></span></p>
+    <a class="btn" href="forms/neocloud-requirements/" style="display:inline-block;text-decoration:none">Take the survey</a>
+  </section>
+  <p class="hint"><a href="https://www.opencompute.org/projects/aicc/" style="color:var(--accent)">AICC project page</a> · <a href="https://ocp-all.groups.io/g/ocp-aicc" style="color:var(--accent)">Mailing list</a></p>
+</main>
+<script>
+/* A survey switches from OPEN to CLOSED on its own once its deadline passes. */
+document.querySelectorAll("[data-closes]").forEach(function (s) {
+  if (!s.dataset.closes || new Date() <= new Date(s.dataset.closes)) return;
+  s.querySelector(".stepno").textContent = "CLOSED";
+  var b = s.querySelector(".btn"); b.textContent = "View the survey"; b.classList.add("ghost");
+});
+</script>
+</body>
+</html>

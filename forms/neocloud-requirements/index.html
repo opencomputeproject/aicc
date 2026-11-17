@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NeoCloud Deployment Requirements Survey · OCP AI Computing Continuum</title>
+<meta name="description" content="OCP AI Computing Continuum (AICC) survey of NeoCloud deployment requirements for Small, Medium and Large deployment profiles.">
+<link rel="icon" href="../../assets/aicc-icon.svg" type="image/svg+xml">
+<link rel="icon" href="../../assets/ocp-logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/form.css?v=202611171200">
+</head>
+<body>
+<div class="logobar">
+  <div class="wrap">
+    <a href="https://www.opencompute.org" target="_blank" rel="noopener" class="logo"><img src="../../assets/ocp-logo.png" alt="Open Compute Project" width="100" height="40"></a>
+    <a href="https://www.opencompute.org/projects/aicc/" target="_blank" rel="noopener" class="projmark" id="projLink">
+      <img src="../../assets/aicc-icon.svg" alt="" width="52" height="52">
+      <span><b>AI Computing Continuum</b><small>OCP Project · AICC</small></span>
+    </a>
+  </div>
+</div>
+<header class="band">
+  <div class="wrap">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="heading"></h1>
+    <p class="lede" id="lede"></p>
+    <ul class="facts" id="facts"></ul>
+    <div class="deadline" id="deadline" hidden><b id="deadlineText"></b><span id="countdown"></span></div>
+  </div>
+</header>
+
+<main class="wrap grid">
+  <div id="col">
+    <div class="preview editbar" id="editBar" role="status" hidden></div>
+    <div class="preview editbar" id="draftBar" role="status" hidden>
+      <span id="draftText"></span>
+      <button type="button" class="linkbtn" id="draftClear">Start over</button>
+    </div>
+    <div class="preview" id="previewBar" hidden>
+      <span>Preview mode: answers from this page are not sent anywhere.</span>
+      <button type="button" class="linkbtn" id="sampleBtn">Fill with sample answers</button>
+    </div>
+
+    <div class="progress" id="progress" aria-live="polite">
+      <div class="progress-top"><span id="progressLabel"></span><span id="progressPct"></span></div>
+      <div class="bar" role="progressbar" aria-label="Survey progress" aria-valuemin="0" aria-valuemax="100" id="progressBar"><i id="progressFill"></i></div>
+    </div>
+
+    <form id="form" novalidate>
+      <input class="hp" type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div id="pages"></div>
+      <div class="actions pager">
+        <button type="button" class="btn ghost" id="backBtn">Back</button>
+        <button type="submit" class="btn" id="nextBtn">Next</button>
+        <span class="formerr" id="formErr" role="alert"></span>
+      </div>
+    </form>
+
+    <section class="step review" id="review" hidden>
+      <div class="stephead"><span class="stepno">REVIEW</span><h2 tabindex="-1" id="reviewHead">Check your answers</h2></div>
+      <p class="stepnote">Open a section to check it, or use <strong>Change</strong> to go back to it. Your answers are not sent until you select <strong>Submit my answers</strong>.</p>
+      <div id="reviewList"></div>
+      <div class="consent">
+        <div class="check" id="consentRow" style="border:0;padding:0">
+          <input type="checkbox" id="consent">
+          <label for="consent" style="font-size:14px">I accept OCP’s <a href="#" id="privacyLink" target="_blank" rel="noopener">Privacy Policy</a> and consent to the transfer of my personal information to the United States, which may have less protection than my jurisdiction of residence.<span class="req" style="color:var(--accent)">*</span></label>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:24px">
+        <button type="button" class="btn" id="confirmBtn">Submit my answers</button>
+        <button type="button" class="btn ghost" id="editBtn">Back</button>
+        <span class="formerr" id="sendErr" role="alert"></span>
+      </div>
+    </section>
+
+    <section class="step" id="closedNote" hidden>
+      <div class="stephead"><span class="stepno">CLOSED</span><h2>This survey has closed</h2></div>
+      <p class="stepnote" id="closedText"></p>
+      <a class="btn ghost" id="closedLink" href="https://www.opencompute.org/projects/aicc/" style="display:inline-block;text-decoration:none">About the AICC project</a>
+    </section>
+
+    <section class="step done" id="done" hidden>
+      <div class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#19194D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h2 style="font-size:28px" id="doneTitle" tabindex="-1">Thank you</h2>
+      <p>Thanks, <span id="doneName"></span>. Your answers are saved. Your reference is <span class="ref" id="doneRef"></span>. <span id="doneLead">A confirmation with a private link to change your answers is on its way to</span> <strong id="doneEmail"></strong>.</p>
+      <p class="demo-note" id="demoNote" hidden>Preview mode: nothing was sent. Once the page has a backend address, this step writes a row to the Survey Results Sheet.</p>
+      <div class="actions"><a class="btn ghost" id="doneLink" href="https://www.opencompute.org/projects/aicc/" style="display:inline-block;text-decoration:none">About the AICC project</a></div>
+    </section>
+  </div>
+
+  <aside class="rail">
+    <div class="panel">
+      <h3>Sections</h3>
+      <ol class="toc" id="toc"></ol>
+    </div>
+    <div class="panel">
+      <h3>How to answer</h3>
+      <ul class="crit">
+        <li>You define your own Small, Medium and Large deployment profiles in Questions 3 and 4.</li>
+        <li>Choose the closest range. “Don’t know / TBD” and “Not applicable” are valid answers.</li>
+        <li>Your answers are kept in this browser as you go, so you can close the page and come back.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>The AICC project</h3>
+      <p class="hint" style="margin:0 0 10px">The OCP AI Computing Continuum project develops open, modular AI infrastructure for sites beyond the hyperscale data center: regional colocation, enterprise on-premises, telco and industrial sites.</p>
+      <p class="hint" style="margin:0"><a id="projPage" href="https://www.opencompute.org/projects/aicc/" target="_blank" rel="noopener">Project page</a> · <a id="listLink" href="https://ocp-all.groups.io/g/ocp-aicc" target="_blank" rel="noopener">Mailing list</a></p>
+    </div>
+  </aside>
+</main>
+
+<footer><div class="wrap" id="footer"></div></footer>
+<script src="config.js?v=202611171200"></script>
+<script src="survey.js?v=202611171200"></script>
+<script src="../../assets/survey-engine.js?v=202611171200"></script>
+</body>
+</html>
