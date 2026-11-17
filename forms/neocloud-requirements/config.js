@@ -12,7 +12,7 @@ window.FORM_CONFIG = {
   deadline: "",                               // UTC, e.g. "2027-01-31T07:59:00Z"; "" = open until closed by hand
   deadlineLabel: "",                          // e.g. "January 30, 2027 at 11:59 PM PT"
   closed: false,                              // true closes the survey now
-  endpoint: "",                               // Apps Script web-app /exec URL; "" = preview mode (nothing is sent)
+  endpoint: "https://script.google.com/macros/s/AKfycbwQv7RbKycfip9YkKnpX3AsdS-HaqayKUUdT3sATzNr1XDFTti7u-r2Kf5AOjno_Mv5/exec",   // Apps Script web-app /exec URL; "" = preview mode
   privacyUrl: "https://www.opencompute.org/privacy",
   draftKey: "aicc-neocloud-draft"             // answers in progress are kept in the visitor's own browser under this key
 };
