@@ -70,7 +70,7 @@
         list.append(el("label", { class: "opt" }, el("input", { type: q.type === "single" ? "radio" : "checkbox", name, value: code }), el("span", null, label)));
       });
       box.append(list);
-      if (q.other) box.append(el("label", { class: "f other", hidden: true }, el("span", { class: "lbl" }, "Please describe"), el("input", { type: "text", id: q.id + "_other", maxlength: 200 })));
+      if (q.other) box.append(el("label", { class: "f other", hidden: true }, el("span", { class: "lbl" }, "Please specify"), el("input", { type: "text", id: q.id + "_other", maxlength: 200 })));
       if (q.comment) {
         const ta = el("textarea", { id: q.id + "_comment", rows: 4, maxlength: q.comment.max });
         const cnt = el("span", { class: "counter" });
@@ -216,7 +216,7 @@
     const v = a[q.id];
     if (q.type === "single") {
       if (q.required && !v) return "Choose one answer.";
-      if (q.other && v === q.other && !a[q.id + "_other"]) return "Please describe your organization.";
+      if (q.other && v === q.other && !a[q.id + "_other"]) return "Please specify your organization type.";
     }
     if (q.type === "multi") {
       if (q.required && !v.length) return "Select at least one answer.";
@@ -310,7 +310,7 @@
   function answerText(q, a, act) {
     const v = a[q.id], L = c => optLabel(q, c);
     if (!shown(q, a, act)) return "Not asked (no liquid cooling, rear-door or immersion in Question 20)";
-    if (q.type === "single") return v ? L(v) + (q.other && v === q.other && a[q.id + "_other"] ? `: ${a[q.id + "_other"]}` : "") : "No answer";
+    if (q.type === "single") return v ? (q.other && v === q.other && a[q.id + "_other"] ? `${L(v).replace(/\s*\(please specify\)$/i, "")}: ${a[q.id + "_other"]}` : L(v)) : "No answer";
     if (q.type === "multi") return (v.length ? v.map(L).join("\n") : "None selected") + (q.comment && a[q.id + "_comment"] ? `\n\nComment: ${a[q.id + "_comment"]}` : "");
     if (q.type === "grid1" || q.type === "gridN") return tiersFor(q, act).map(k => {
       const x = v[k]; return `${tierName(k)}: ${q.type === "grid1" ? (x ? L(x) : "No answer") : (x.length ? x.map(L).join("; ") : "None selected")}`;

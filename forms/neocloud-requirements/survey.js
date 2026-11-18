@@ -23,7 +23,7 @@ var SURVEY = (function () {
 
   return {
     id: 'neocloud-requirements',
-    version: '2026-11-17.1',
+    version: '2026-11-18.1',
     title: 'NeoCloud Deployment Requirements Survey',
     tiers: [['S', 'Small'], ['M', 'Medium'], ['L', 'Large']],
 
@@ -43,7 +43,7 @@ var SURVEY = (function () {
             text: 'Which statement best describes your organization?', other: 'ORG_06',
             options: [['ORG_01', 'NeoCloud / GPU cloud provider'], ['ORG_02', 'Colocation provider with managed AI infrastructure'],
               ['ORG_03', 'Managed service provider / systems integrator operating AI infrastructure'], ['ORG_04', 'Telecom / edge cloud provider'],
-              ['ORG_05', 'Enterprise private cloud operator'], ['ORG_06', 'Other'], ['ORG_07', 'Prefer not to identify']] },
+              ['ORG_05', 'Enterprise private cloud operator'], ['ORG_07', 'Prefer not to identify'], ['ORG_06', 'Other (please specify)']] },
           { id: 'q2', n: 2, type: 'multi', required: true, title: 'Primary deployment objective',
             text: 'Which objectives apply to your planned or current NeoCloud deployments? Select all that apply.',
             options: [['OBJ_01', 'New capacity / greenfield build'], ['OBJ_02', 'Expansion of an existing facility'], ['OBJ_03', 'Modernization / refresh'],
@@ -57,7 +57,7 @@ var SURVEY = (function () {
           { id: 'q4', n: 4, type: 'grid1', required: true, title: 'Deployment size by rack and accelerator count',
             text: 'Select the typical scale of each deployment profile.',
             help: 'If the rack and accelerator bands disagree, select the accelerator band and note the exception in the final comment (Question 50).',
-            options: [['SCALE_01', '1–4 AI racks / <64 accelerators'], ['SCALE_02', '5–16 racks / 64–255 accelerators'], ['SCALE_03', '17–64 racks / 256–1,023 accelerators'],
+            options: [['SCALE_01', '1–4 racks / <64 accelerators'], ['SCALE_02', '5–16 racks / 64–255 accelerators'], ['SCALE_03', '17–64 racks / 256–1,023 accelerators'],
               ['SCALE_04', '65–256 racks / 1,024–4,095 accelerators'], ['SCALE_05', '257–1,024 racks / 4,096–16,383 accelerators'],
               ['SCALE_06', '>1,024 racks / ≥16,384 accelerators'], DK, NA] },
           { id: 'q5', n: 5, type: 'grid1', required: true, title: 'Deployment model and maturity',

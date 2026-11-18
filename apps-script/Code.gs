@@ -274,7 +274,7 @@ function check_(d) {
       else clean[q.id] = v;
       if (q.other && clean[q.id] === q.other) {
         const o = String(a[q.id + '_other'] || '').trim();
-        if (!o) return { error: `${name(q)}: please describe your organization.` };
+        if (!o) return { error: `${name(q)}: please specify your organization type.` };
         if (o.length > 200) return { error: `${name(q)}: the description is over 200 characters.` };
         clean[q.id + '_other'] = o;
       }
@@ -407,7 +407,7 @@ const esc_ = v => String(v == null ? '' : v).replace(/[&<>"']/g, ch => ({ '&': '
 
 function summary_(c, a) {
   const q1 = questions_()[0], tq = SURVEY.tierSource, offered = SURVEY.tiers.filter(t => (a[tq] || {})[t[0]] !== 'NA').map(t => t[1]);
-  const org = a.q1 ? q1.label[a.q1] + (a.q1_other ? `: ${a.q1_other}` : '') : '';
+  const org = a.q1 ? q1.label[a.q1].replace(/\s*\(please specify\)$/i, '') + (a.q1_other ? `: ${a.q1_other}` : '') : '';
   return [['Organization type', org], ['Organization', c.company || 'Not given'], ['Profiles', offered.join(', ')]];
 }
 
