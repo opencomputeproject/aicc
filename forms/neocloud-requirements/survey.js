@@ -37,7 +37,7 @@ var SURVEY = (function () {
     sections: [
       {
         title: 'Respondent, business objective & size definitions',
-        note: 'You define your own Small, Medium and Large deployment profiles in Questions 3 and 4. Every later Small / Medium / Large question refers to those profiles. Mark a tier “Not applicable” in Question 3 if you don’t offer it, and it will be left out of the rest of the survey.',
+        note: 'You define your own Small, Medium and Large deployment profiles in Questions 3 and 4. Subsequent questions refer to those profiles defined as Small / Medium / Large. Mark a tier “Not applicable” in Question 3 if you don’t offer it, and it will be left out of the rest of the survey.',
         questions: [
           { id: 'q1', n: 1, type: 'single', required: true, title: 'Provider profile',
             text: 'Which statement best describes your organization?', other: 'ORG_06',
